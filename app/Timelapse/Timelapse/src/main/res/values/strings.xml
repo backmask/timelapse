@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Timelapse</string>
+    <string name="label_direct_control">Direct control</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Direct control -->
+    <string name="wheels_control">Wheels control</string>
+    <string name="arm_control">Arm control</string>
+    <string name="left_wheel">Left wheel</string>
+    <string name="right_wheel">Right wheel</string>
+    <string name="arm_rotation">Arm rotation</string>
+
+</resources>
