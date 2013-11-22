@@ -2,5 +2,9 @@
 <resources>
     <declare-styleable name="ServoControl">
         <attr name="label" format="string" />
+        <attr name="type" format="enum">
+            <enum name="regular" value="0" />
+            <enum name="continuous_rotation" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

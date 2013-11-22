@@ -15,8 +15,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="1">
-        <com.backmask.timelapse.view.ServoControlView custom:label="@string/left_wheel" />
-        <com.backmask.timelapse.view.ServoControlView custom:label="@string/right_wheel" />
+
+        <com.backmask.timelapse.view.ServoControlView
+            android:id="@+id/left_wheel"
+            custom:type="continuous_rotation"
+            custom:label="@string/left_wheel" />
+
+        <com.backmask.timelapse.view.ServoControlView
+            android:id="@+id/right_wheel"
+            custom:type="continuous_rotation"
+            custom:label="@string/right_wheel" />
     </TableLayout>
 
     <TextView
@@ -29,7 +37,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="1">
-        <com.backmask.timelapse.view.ServoControlView custom:label="@string/arm_rotation" />
+
+        <com.backmask.timelapse.view.ServoControlView
+            android:id="@+id/arm_rotation"
+            custom:type="regular"
+            custom:label="@string/arm_rotation" />
     </TableLayout>
 
 </LinearLayout>

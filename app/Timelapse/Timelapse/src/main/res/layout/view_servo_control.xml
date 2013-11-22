@@ -1,5 +1,4 @@
-<TableRow
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -9,17 +8,16 @@
         android:id="@+id/servo_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"/>
+        android:layout_gravity="right|center_vertical" />
 
     <SeekBar
         android:id="@+id/servo_seekbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:progress="20"
         android:layout_weight="1"
-        android:secondaryProgress="20"
-        android:layout_gravity="right|center_vertical"/>
+        android:max="180"
+        android:layout_gravity="right|center_vertical" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -29,6 +27,8 @@
         android:ems="3"
         android:text="0"
         android:inputType="number"
-        android:layout_gravity="right|center_vertical"/>
+        android:layout_gravity="right|center_vertical"
+        android:selectAllOnFocus="true"
+        android:imeOptions="actionDone" />
 
 </TableRow>
