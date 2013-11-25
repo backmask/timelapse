@@ -1,3 +1,8 @@
+# cad temporary files
+*.bak
+*.dwl
+*.dwl2
+
 # built application files
 *.apk
 *.ap_

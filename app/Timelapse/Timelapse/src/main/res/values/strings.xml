@@ -14,5 +14,6 @@
     <string name="left_wheel">Left wheel</string>
     <string name="right_wheel">Right wheel</string>
     <string name="arm_rotation">Arm rotation</string>
+    <string name="arm_height">Arm height</string>
 
 </resources>

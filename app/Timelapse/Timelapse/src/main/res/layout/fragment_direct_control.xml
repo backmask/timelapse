@@ -42,6 +42,11 @@
             android:id="@+id/arm_rotation"
             custom:type="regular"
             custom:label="@string/arm_rotation" />
+
+        <com.backmask.timelapse.view.ServoControlView
+            android:id="@+id/arm_height"
+            custom:type="regular"
+            custom:label="@string/arm_height" />
     </TableLayout>
 
 </LinearLayout>

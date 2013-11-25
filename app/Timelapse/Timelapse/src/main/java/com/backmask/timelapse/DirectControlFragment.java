@@ -19,6 +19,7 @@ public class DirectControlFragment extends Fragment implements ArduinoCommanderL
     private ServoControlView m_leftWheel;
     private ServoControlView m_rightWheel;
     private ServoControlView m_armRotation;
+    private ServoControlView m_armHeight;
 
     public DirectControlFragment() {
     }
@@ -34,6 +35,7 @@ public class DirectControlFragment extends Fragment implements ArduinoCommanderL
         m_leftWheel = (ServoControlView) rootView.findViewById(R.id.left_wheel);
         m_rightWheel = (ServoControlView) rootView.findViewById(R.id.right_wheel);
         m_armRotation = (ServoControlView) rootView.findViewById(R.id.arm_rotation);
+        m_armHeight= (ServoControlView) rootView.findViewById(R.id.arm_height);
 
         m_leftWheel.setListener(new ServoControlView.ServoControlListener() {
             @Override
@@ -53,6 +55,13 @@ public class DirectControlFragment extends Fragment implements ArduinoCommanderL
             @Override
             public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
                 m_commander.setServoRotation(ArduinoCommander.SERVO_ARM_ROTATION, newValue);
+            }
+        });
+
+        m_armHeight.setListener(new ServoControlView.ServoControlListener() {
+            @Override
+            public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
+                m_commander.setServoRotation(ArduinoCommander.SERVO_ARM_HEIGHT, newValue);
             }
         });
 
