@@ -5,8 +5,9 @@
     <string name="label_direct_control">Direct control</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting</string>
+    <string name="disconnect">Disconnect</string>
 
     <!-- Direct control -->
     <string name="wheels_control">Wheels control</string>

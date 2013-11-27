@@ -2,11 +2,11 @@ package com.backmask.timelapse;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.backmask.timelapse.nav.NavConfig;
 
@@ -43,11 +43,13 @@ public class MainActivity extends Activity
     @Override
     public void onNavigationDrawerItemSelected(int idx) {
         NavConfig.NavElement elt = m_navConfig.getAt(idx);
-        if (elt != null) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if (elt != null && fragmentManager.findFragmentByTag(elt.label) == null) {
             m_title = elt.label;
-            FragmentManager fragmentManager = getFragmentManager();
+            Fragment contentFragment = m_navConfig.getFragment(elt);
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, m_navConfig.getFragment(elt))
+                    .replace(R.id.container, contentFragment, elt.label)
                     .commit();
         }
     }
@@ -73,22 +75,10 @@ public class MainActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.global, menu);
             restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
