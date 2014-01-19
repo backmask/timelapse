@@ -16,7 +16,7 @@ public class ArduinoCommander {
     public static int SERVO_LEFT_WHEEL = 13;
     public static int SERVO_RIGHT_WHEEL = 12;
     public static int SERVO_ARM_ROTATION = 9;
-    public static int SERVO_ARM_HEIGHT = 10;
+    public static int SERVO_ARM_HEIGHT = 8;
 
     public ArduinoCommander(Activity activity, ArduinoCommanderListener listener) {
         m_worker = new ArduinoCommanderWorker(new ArduinoFirmata(activity), listener);
