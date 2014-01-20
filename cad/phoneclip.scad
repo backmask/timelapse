@@ -1,19 +1,22 @@
 $fn = 25;
 epsilon = 0.001; // Used to resolve manifold issues
 phone_width = 71.5;
-phone_thickness = 11;
+phone_pad = 2;
+phone_pad_l = 20;
+phone_thickness = 12 + phone_pad;
 
 clip_thickness = 2;
-clip_branch_thickness = 3;
+clip_branch_thickness = 2;
 clip_branch_width = 10;
 clip_branch_angle = 45;
 clip_grip_length = 2;
 
 plate_width = 30;
 plate_height = 20;
-plate_thickness = 1.5;
+plate_thickness = 1;
 plate_holes_distance = 14;
 plate_holes_radius = 2;
+plate_holes_head_radius = 3.5;
 
 module drawClipBranch(angle) {
 	branch_width = clip_branch_width;
@@ -32,9 +35,15 @@ module drawClipBranch(angle) {
 		// Skewed branch
 		intersection() {
 			// Uncut rotated branch
-			rotate([0, 0, angle]) 
-				translate([0, branch_y_delta, 0])
+			rotate([0, 0, angle]) {
+				translate([0, branch_y_delta, 0]) {
 					cube([branch_width, branch_length, clip_branch_thickness]);
+					translate([angle < 0 ? branch_width/3 : 0, clip_branch_thickness - phone_pad_l/2, 0])
+						cube([branch_width/1.5, phone_pad_l, clip_branch_thickness + phone_pad]);
+					translate([0, branch_length - phone_pad_l /2 - clip_branch_thickness, 0])
+						cube([branch_width, phone_pad_l, clip_branch_thickness + phone_pad]);
+				}
+			}
 			// Bounding box
 			translate([branch_x_delta > 0 ? 0 : branch_x_delta, 0, 0]) 
 				cube([bounding_box_width, bounding_box_height, bounding_box_thickness]);
@@ -73,20 +82,29 @@ module drawClipGrip(clip_grip_width) {
 }
 
 module drawPlate() {
-	difference() {
-		translate([0, 0, plate_thickness / 2])
-			cube([plate_width, plate_height, plate_thickness], true);
-		translate([plate_holes_distance / 2, 0, 0])
-			cylinder(plate_thickness * 2, plate_holes_radius, plate_holes_radius);
-		translate([-plate_holes_distance / 2, 0, 0])
-			cylinder(plate_thickness * 2, plate_holes_radius, plate_holes_radius);
-	}
+	translate([0, 0, plate_thickness / 2])
+		cube([plate_width, plate_height, plate_thickness], true);
 }
 
-union() {
-	translate([-clip_branch_width / cos(clip_branch_angle / 2) / 2, -phone_width / 2, 0]) {
-		drawClipBranch(- clip_branch_angle / 2);
-		drawClipBranch(+ clip_branch_angle / 2);
+module drawPlateHoles() {
+	translate([plate_holes_distance / 2, 0, 0])
+		cylinder(plate_thickness * 2, plate_holes_radius, plate_holes_radius);
+	translate([-plate_holes_distance / 2, 0, 0])
+		cylinder(plate_thickness * 2, plate_holes_radius, plate_holes_radius);
+
+	translate([plate_holes_distance / 2, 0, plate_thickness])
+		cylinder(clip_branch_thickness, plate_holes_head_radius, plate_holes_head_radius);
+	translate([-plate_holes_distance / 2, 0, plate_thickness])
+		cylinder(clip_branch_thickness, plate_holes_head_radius, plate_holes_head_radius);
+}
+
+difference() {
+	union() {
+		translate([-clip_branch_width / cos(clip_branch_angle / 2) / 2, -phone_width / 2, 0]) {
+			drawClipBranch(- clip_branch_angle / 2);
+			drawClipBranch(+ clip_branch_angle / 2);
+		}
+		drawPlate();
 	}
-	drawPlate();
+	drawPlateHoles();
 }
