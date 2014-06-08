@@ -6,5 +6,6 @@
             <enum name="regular" value="0" />
             <enum name="continuous_rotation" value="1" />
         </attr>
+        <attr name="pin" format="integer" />
     </declare-styleable>
 </resources>

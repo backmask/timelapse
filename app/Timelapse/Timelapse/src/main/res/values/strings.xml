@@ -8,6 +8,12 @@
     <string name="connect">Connect</string>
     <string name="connecting">Connecting</string>
     <string name="disconnect">Disconnect</string>
+    <string name="actions">Actions</string>
+
+    <!-- General control -->
+    <string name="center_arm">Center arm</string>
+    <string name="shutdown_arm">Shutdown arm</string>
+    <string name="tare_arm">Tare position</string>
 
     <!-- Direct control -->
     <string name="wheels_control">Wheels control</string>
@@ -16,5 +22,8 @@
     <string name="right_wheel">Right wheel</string>
     <string name="arm_rotation">Arm rotation</string>
     <string name="arm_height">Arm height</string>
+    <string name="device_tilt">Device tilt</string>
 
+    <!-- Infuse -->
+    <string name="label_infuse">Infuse</string>
 </resources>

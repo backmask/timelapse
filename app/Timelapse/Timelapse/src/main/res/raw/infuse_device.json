@@ -1,0 +1,8 @@
+{
+    "name" : "Android Phone",
+    "family" : "phone.android",
+    "version" : "4.3",
+    "sensors" : [
+        "gyroscope"
+    ]
+}

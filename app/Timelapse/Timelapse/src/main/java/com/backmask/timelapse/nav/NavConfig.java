@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.backmask.timelapse.DirectControlFragment;
+import com.backmask.timelapse.InfuseFragment;
 import com.backmask.timelapse.R;
 
 public class NavConfig {
@@ -20,6 +21,10 @@ public class NavConfig {
                 new NavElement() {{
                     label = ctx.getString(R.string.label_direct_control);
                     type = DirectControlFragment.class;
+                }},
+                new NavElement() {{
+                    label = ctx.getString(R.string.label_infuse);
+                    type = InfuseFragment.class;
                 }}
         };
     }

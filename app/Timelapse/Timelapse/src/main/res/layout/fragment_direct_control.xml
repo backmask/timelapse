@@ -8,6 +8,40 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="@string/actions"
+        style="?android:attr/listSeparatorTextViewStyle" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/center_arm"
+            android:id="@+id/center_arm" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/shutdown_arm"
+            android:id="@+id/shutdown_arm" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tare_arm"
+            android:id="@+id/tare_arm" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:text="@string/wheels_control"
         style="?android:attr/listSeparatorTextViewStyle" />
 
@@ -19,12 +53,14 @@
         <com.backmask.timelapse.view.ServoControlView
             android:id="@+id/left_wheel"
             custom:type="continuous_rotation"
-            custom:label="@string/left_wheel" />
+            custom:label="@string/left_wheel"
+            custom:pin="@integer/pin_left_wheel" />
 
         <com.backmask.timelapse.view.ServoControlView
             android:id="@+id/right_wheel"
             custom:type="continuous_rotation"
-            custom:label="@string/right_wheel" />
+            custom:label="@string/right_wheel"
+            custom:pin="@integer/pin_right_wheel"/>
     </TableLayout>
 
     <TextView
@@ -41,12 +77,20 @@
         <com.backmask.timelapse.view.ServoControlView
             android:id="@+id/arm_rotation"
             custom:type="regular"
-            custom:label="@string/arm_rotation" />
+            custom:label="@string/arm_rotation"
+            custom:pin="@integer/pin_arm_rotation"/>
 
         <com.backmask.timelapse.view.ServoControlView
             android:id="@+id/arm_height"
             custom:type="regular"
-            custom:label="@string/arm_height" />
+            custom:label="@string/arm_height"
+            custom:pin="@integer/pin_arm_height"/>
+
+        <com.backmask.timelapse.view.ServoControlView
+            android:id="@+id/device_tilt"
+            custom:type="regular"
+            custom:label="@string/device_tilt"
+            custom:pin="@integer/pin_device_tilt"/>
     </TableLayout>
 
 </LinearLayout>

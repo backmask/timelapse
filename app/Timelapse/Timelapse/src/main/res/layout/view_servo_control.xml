@@ -5,13 +5,13 @@
     android:padding="5dip">
 
     <TextView
-        android:id="@+id/servo_label"
+        android:tag="servo_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical" />
 
     <SeekBar
-        android:id="@+id/servo_seekbar"
+        android:tag="servo_seekbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/servo_value"
+        android:tag="servo_value"
         android:singleLine="true"
         android:ems="3"
         android:text="0"
@@ -30,5 +30,6 @@
         android:layout_gravity="right|center_vertical"
         android:selectAllOnFocus="true"
         android:imeOptions="actionDone" />
+
 
 </TableRow>

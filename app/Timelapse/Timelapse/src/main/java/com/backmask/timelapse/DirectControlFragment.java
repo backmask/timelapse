@@ -3,17 +3,22 @@ package com.backmask.timelapse;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.backmask.timelapse.arduino.ArduinoCommander;
 import com.backmask.timelapse.arduino.ArduinoCommanderListener;
 import com.backmask.timelapse.view.ServoControlView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DirectControlFragment extends Fragment implements ArduinoCommanderListener {
 
@@ -22,10 +27,7 @@ public class DirectControlFragment extends Fragment implements ArduinoCommanderL
     private boolean m_isConnected;
     private boolean m_isConnecting;
 
-    private ServoControlView m_leftWheel;
-    private ServoControlView m_rightWheel;
-    private ServoControlView m_armRotation;
-    private ServoControlView m_armHeight;
+    private Map<Integer, ServoControlView> m_servoViews;
     private MenuItem m_connectToggle;
 
     public DirectControlFragment() {
@@ -38,44 +40,59 @@ public class DirectControlFragment extends Fragment implements ArduinoCommanderL
         m_isConnected = false;
         m_isConnecting = false;
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+        setRetainInstance(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_direct_control, container, false);
+        m_servoViews = new HashMap<Integer, ServoControlView>();
+        m_servoViews.put(R.id.left_wheel, (ServoControlView) rootView.findViewById(R.id.left_wheel));
+        m_servoViews.put(R.id.right_wheel, (ServoControlView) rootView.findViewById(R.id.right_wheel));
+        m_servoViews.put(R.id.arm_rotation, (ServoControlView) rootView.findViewById(R.id.arm_rotation));
+        m_servoViews.put(R.id.arm_height, (ServoControlView) rootView.findViewById(R.id.arm_height));
+        m_servoViews.put(R.id.device_tilt, (ServoControlView) rootView.findViewById(R.id.device_tilt));
+        Button centerArm = (Button) rootView.findViewById(R.id.center_arm);
+        Button shutdownArm = (Button) rootView.findViewById(R.id.shutdown_arm);
+        Button tareArm = (Button) rootView.findViewById(R.id.tare_arm);
 
-        m_leftWheel = (ServoControlView) rootView.findViewById(R.id.left_wheel);
-        m_rightWheel = (ServoControlView) rootView.findViewById(R.id.right_wheel);
-        m_armRotation = (ServoControlView) rootView.findViewById(R.id.arm_rotation);
-        m_armHeight = (ServoControlView) rootView.findViewById(R.id.arm_height);
-
-        m_leftWheel.setListener(new ServoControlView.ServoControlListener() {
+        ServoControlView.ServoControlListener servoListener = new ServoControlView.ServoControlListener() {
             @Override
             public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
-                m_commander.setServoRotation(ArduinoCommander.SERVO_LEFT_WHEEL, newValue);
+                m_commander.setServoRotation(triggeredBy.getPin(), newValue);
+            }
+        };
+
+        for (ServoControlView view : m_servoViews.values()) {
+            view.setListener(servoListener);
+        }
+
+        centerArm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (ServoControlView view : m_servoViews.values()) {
+                    view.setNeutralValue();
+                }
             }
         });
 
-        m_rightWheel.setListener(new ServoControlView.ServoControlListener() {
+        shutdownArm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
-                m_commander.setServoRotation(ArduinoCommander.SERVO_RIGHT_WHEEL, newValue);
+            public void onClick(View v) {
+                for (ServoControlView view : m_servoViews.values()) {
+                    m_commander.shutdownServo(view.getPin());
+                }
             }
         });
 
-        m_armRotation.setListener(new ServoControlView.ServoControlListener() {
+        tareArm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
-                m_commander.setServoRotation(ArduinoCommander.SERVO_ARM_ROTATION, newValue);
-            }
-        });
-
-        m_armHeight.setListener(new ServoControlView.ServoControlListener() {
-            @Override
-            public void onValueChanged(ServoControlView triggeredBy, int newValue, int oldValue) {
-                m_commander.setServoRotation(ArduinoCommander.SERVO_ARM_HEIGHT, newValue);
+            public void onClick(View v) {
+                for (ServoControlView view : m_servoViews.values()) {
+                    view.setCurrentAsNeutralValue(getActivity());
+                }
             }
         });
 

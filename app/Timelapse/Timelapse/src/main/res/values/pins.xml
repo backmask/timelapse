@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="pin_left_wheel">13</integer>
+    <integer name="pin_right_wheel">12</integer>
+    <integer name="pin_arm_rotation">9</integer>
+    <integer name="pin_arm_height">8</integer>
+    <integer name="pin_device_tilt">7</integer>
+</resources>

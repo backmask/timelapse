@@ -1,5 +1,7 @@
 package com.backmask.timelapse.arduino;
 
+import android.app.Activity;
+
 import com.backmask.timelapse.utils.ConcurrentOverridingQueue;
 
 import org.shokai.firmata.ArduinoFirmata;
@@ -7,29 +9,29 @@ import org.shokai.firmata.ArduinoFirmata;
 public class ArduinoCommanderWorker implements Runnable {
 
     private ArduinoCommanderListener m_listener;
-    private ArduinoFirmata m_firmata;
+    private Activity m_activity;
     private ConcurrentOverridingQueue<ArduinoCommanderMessage> m_queue;
 
-    public ArduinoCommanderWorker(ArduinoFirmata firmata, ArduinoCommanderListener listener) {
+    public ArduinoCommanderWorker(Activity activity, ArduinoCommanderListener listener) {
         m_listener = listener;
-        m_firmata = firmata;
+        m_activity = activity;
         m_queue = new ConcurrentOverridingQueue<ArduinoCommanderMessage>();
     }
 
     public void queueMessage(ArduinoCommanderMessage message) {
-        if (!m_firmata.isOpen()) return;
         m_queue.add(message);
     }
 
     @Override
     public void run() {
         try {
-            m_firmata.connect();
-            m_listener.onConnectivityUpdate(m_firmata.isOpen());
+            ArduinoFirmata firmata = new ArduinoFirmata(m_activity);
+            firmata.connect();
+            m_listener.onConnectivityUpdate(firmata.isOpen());
 
-            while (m_firmata.isOpen()) {
+            while (firmata.isOpen()) {
                 if (!m_queue.isEmpty()) {
-                    m_queue.poll().visit(m_firmata);
+                    m_queue.poll().visit(firmata);
                 }
             }
         } catch (Exception e) {
