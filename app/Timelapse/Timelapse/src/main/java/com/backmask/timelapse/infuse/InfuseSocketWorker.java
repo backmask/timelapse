@@ -2,6 +2,7 @@ package com.backmask.timelapse.infuse;
 
 import android.app.Activity;
 import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
 
 import com.backmask.timelapse.R;
@@ -70,13 +71,24 @@ public class InfuseSocketWorker implements Runnable {
                 ConnectedMessage connectedMessage = new ConnectedMessage();
                 if (connectedMessage.readMessage(reader) && connectedMessage.isConnected) {
                     m_listener.onConnectivityUpdate(true);
+
+                    if (reader.peek() == JsonToken.BEGIN_OBJECT) {
+                        // continue
+                        Log.d("infuse", "BEGIN OBJECT");
+                    } else {
+                        Log.d("infuse", reader.peek().toString());
+                        Log.d("infuse", reader.nextString());
+
+                    }
+
+                    reader.endArray();
                 }
-                reader.endArray();
                 m_socket.close();
             }
 
         } catch (Exception e) {
             if (!m_disconnecting) {
+                e.printStackTrace();
                 m_listener.onException(e);
             }
         }

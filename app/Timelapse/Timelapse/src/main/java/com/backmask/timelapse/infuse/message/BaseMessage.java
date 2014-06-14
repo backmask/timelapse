@@ -12,32 +12,60 @@ public abstract class BaseMessage {
         INVALID
     }
 
+    public String method;
     public Status status;
+    public int errorCode;
+    public String errorMessage;
 
     public boolean readMessage(JsonReader reader) throws IOException {
         reader.beginObject();
-        status = readStatus(reader);
-        boolean readBody = tryReadBody(reader);
-        reader.endObject();
+        boolean successfullyRead = true;
 
-        return status != Status.INVALID && readBody;
-    }
-
-    private Status readStatus(JsonReader reader) throws IOException {
         String statusName = reader.nextName();
-        if (!statusName.equals("status")) {
-            return Status.INVALID;
+        if ("method".equals(statusName)) {
+            method = reader.nextString();
+            statusName = reader.nextName();
+        }
+
+        if (!"status".equals(statusName)) {
+            status = Status.INVALID;
+            return false;
         }
 
         String statusValue = reader.nextString();
-        if (statusValue.equals("ok")) {
-            return Status.OK;
+        if ("ok".equals(statusValue)) {
+            status = Status.OK;
+            if (reader.hasNext() && "data".equals(reader.nextName())) {
+                reader.beginObject();
+                successfullyRead = tryReadData(reader);
+                reader.endObject();
+            }
         } else if (statusName.equals("error")) {
-            return Status.ERROR;
+            status = Status.ERROR;
+            if (reader.hasNext() && "error".equals(reader.nextName())) {
+                reader.beginObject();
+                successfullyRead = tryReadError(reader);
+                reader.endObject();
+            }
+        } else {
+            status = Status.INVALID;
+            return false;
         }
 
-        return Status.INVALID;
+        reader.endObject();
+        return status != Status.INVALID && successfullyRead;
     }
 
-    protected abstract boolean tryReadBody(JsonReader reader) throws IOException;
+    protected abstract boolean tryReadData(JsonReader reader) throws IOException;
+
+    protected boolean tryReadError(JsonReader reader) throws IOException
+    {
+        if (reader.hasNext() && "code".equals(reader.nextName())) errorCode = reader.nextInt();
+        else return false;
+
+        if (reader.hasNext() && "message".equals(reader.nextName())) errorMessage = reader.nextString();
+        else return false;
+
+        return true;
+    }
 }

@@ -26,4 +26,10 @@
 
     <!-- Infuse -->
     <string name="label_infuse">Infuse</string>
+
+    <!-- Camera -->
+    <string name="label_camera">Camera</string>
+    <string name="toggle_front_camera">Front camera</string>
+    <string name="infuse_server">Infuse server</string>
+    <string name="forwarded_sensors">Forwarded sensors</string>
 </resources>

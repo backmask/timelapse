@@ -1,8 +1,11 @@
 {
-    "name" : "Android Phone",
-    "family" : "phone.android",
-    "version" : "4.3",
-    "sensors" : [
-        "gyroscope"
-    ]
+    "method" : "/bootstrap/device",
+    "params" : {
+        "name" : "Android Phone",
+        "family" : "phone.android",
+        "version" : "4.3",
+        "sensors" : [
+            "gyroscope"
+        ]
+    }
 }

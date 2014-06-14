@@ -8,9 +8,9 @@ public class ConnectedMessage extends BaseMessage {
     public boolean isConnected;
 
     @Override
-    public boolean tryReadBody(JsonReader reader) throws IOException {
+    public boolean tryReadData(JsonReader reader) throws IOException {
         String name = reader.nextName();
-        if (!name.equals("connected")) {
+        if (!"connected".equals(name)) {
             return false;
         }
 
